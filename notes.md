@@ -21,3 +21,13 @@ Managing **complexity**. Once a codebase gets large enough, managing the interac
 4. We’ll develop an in-depth understanding of “strictness”
 
 > install YARN in course repo
+
+## tsconfig
+
+* ES2022 allows for async/await
+*
+
+"esModuleInterop": true, /*Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility.*/
+
+* not great for a library, but approrpiate for an app
+* when on for library, anyone using the library also has to have this on
