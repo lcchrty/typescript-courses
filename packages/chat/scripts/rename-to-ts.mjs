@@ -25,6 +25,7 @@ const renameFiles = async (dir, oldExt, newExt) => {
       if (fileName.endsWith(oldExt)) {
         const newFileName = fileName.replace(new RegExp(`${oldExt}$`), newExt)
         const newFullPath = path.join(dir, newFileName)
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ", newFullPath)
 
         // Using git mv to rename with execa
         try {
