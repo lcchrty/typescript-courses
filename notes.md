@@ -33,3 +33,5 @@ Managing **complexity**. Once a codebase gets large enough, managing the interac
 * when on for library, anyone using the library also has to have this on
 
 get typescript into your build toolchain
+
+renaming files all at once -
