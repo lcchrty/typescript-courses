@@ -15,21 +15,23 @@ const renameFiles = async (dir, oldExt, newExt) => {
 
   for (const file of files) {
     const fullPath = path.join(dir, file.name)
+    // console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${fullPath}`)
 
     if (file.isDirectory()) {
       await renameFiles(fullPath, oldExt, newExt)
+      // console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~file.isDirectory() fired`)
     } else if (file.isFile()) {
       const fileName = file.name
-
       // Check if the file name ends with the old extension
       if (fileName.endsWith(oldExt)) {
         const newFileName = fileName.replace(new RegExp(`${oldExt}$`), newExt)
         const newFullPath = path.join(dir, newFileName)
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ", newFullPath)
+        console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${newFileName}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${newFullPath}`)
 
         // Using git mv to rename with execa
         try {
-          execa.execaSync('git', ['mv', fullPath, newFullPath])
+          execa.execaSync('git', ['add', newFullPath])
+          // execa.execaSync('git', ['mv', fullPath, newFullPath])
           console.log(`Renamed ${fullPath} to ${newFullPath}`)
         } catch (error) {
           console.error(
@@ -44,12 +46,12 @@ const renameFiles = async (dir, oldExt, newExt) => {
 
 const main = async () => {
   await renameFiles('src', '.jsx', '.tsx')
-  await renameFiles('src', '.js', '.ts')
-  await renameFiles('tests', '.jsx', '.tsx')
-  await renameFiles('tests', '.test.jsx.snap', '.test.tsx.snap')
-  await renameFiles('tests', '.js', '.ts')
+  //   await renameFiles('src', '.js', '.ts')
+  //   await renameFiles('tests', '.jsx', '.tsx')
+  //   await renameFiles('tests', '.test.jsx.snap', '.test.tsx.snap')
+  //   await renameFiles('tests', '.js', '.ts')
 }
 
 main().catch((err) => {
   console.error(err)
-})
+});
