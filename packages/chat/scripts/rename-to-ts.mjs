@@ -30,8 +30,9 @@ const renameFiles = async (dir, oldExt, newExt) => {
 
         // Using git mv to rename with execa
         try {
-          execa.execaSync('git', ['add', newFullPath])
-          // execa.execaSync('git', ['mv', fullPath, newFullPath])
+          fs.renameSync(fullPath, newFullPath)
+          // execa.execaSync('git', ['add', newFullPath])
+          execa.execaSync('git', ['mv', fullPath, newFullPath])
           console.log(`Renamed ${fullPath} to ${newFullPath}`)
         } catch (error) {
           console.error(
