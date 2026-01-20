@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2018",
     "allowJs": true,
+    "checkJs": true,
     "module": "commonjs",
     "noEmit": true,
     "outDir": "dist",
@@ -12,5 +13,11 @@
     "baseUrl": ".",
     "rootDir": "."
   },
-  "include": ["src", "tests", "types", ".eslintrc.js", "jest.config.js"],
+  "include": [
+    "src",
+    "tests",
+    "types",
+    ".eslintrc.js",
+    "jest.config.js"
+  ],
 }

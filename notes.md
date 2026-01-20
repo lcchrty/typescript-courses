@@ -31,3 +31,5 @@ Managing **complexity**. Once a codebase gets large enough, managing the interac
 
 * not great for a library, but approrpiate for an app
 * when on for library, anyone using the library also has to have this on
+
+get typescript into your build toolchain
