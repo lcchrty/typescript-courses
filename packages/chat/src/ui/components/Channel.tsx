@@ -8,9 +8,9 @@ import Loading from './Loading'
 
 const Channel = ({ channel }) => {
   /**
-   * @type { any [] | null}
+   * 
    */
-  const initialMessages = null;
+  const initialMessages: any[] | null = null;
   const [messages, setMessages] = React.useState(initialMessages)
   useAsyncDataEffect(
     () => getChannelMessages(channel.teamId, channel.id),
