@@ -34,4 +34,6 @@ Managing **complexity**. Once a codebase gets large enough, managing the interac
 
 get typescript into your build toolchain
 
-renaming files all at once -
+renaming files all at once - re: scripts
+
+ambient types: declaration space vs. implementation space
