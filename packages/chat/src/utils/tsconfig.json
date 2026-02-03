@@ -3,6 +3,8 @@
         "../../tsconfig.json"
     ],
     "compilerOptions": {
+        "strictNullChecks": true,
+        "exactOptionalPropertyTypes": true,
         "noImplicitAny": true
     },
     "include": [

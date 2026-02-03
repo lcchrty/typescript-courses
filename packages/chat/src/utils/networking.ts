@@ -1,5 +1,5 @@
-import { stringifyError } from './error'
-import { HTTPError } from './http-error.cjs'
+import { stringifyError } from 'chat-stdlib'
+import { HTTPError } from 'http-error'
 
 /**
  *

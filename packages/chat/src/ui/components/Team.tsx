@@ -3,7 +3,8 @@ import { Route, Switch } from 'react-router-dom'
 import TeamSidebar from './TeamSidebar'
 import Channel from './Channel'
 
-const Team = ({ team }) => {
+
+const Team = ({ team }: any) => {
   console.log(
     `%c TEAM render: ${team.name}`,
     'background-color: blue; color: white',
