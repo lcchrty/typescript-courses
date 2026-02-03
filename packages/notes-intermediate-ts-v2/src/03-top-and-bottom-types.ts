@@ -9,54 +9,54 @@ flexible.it.is.possible.to.access.any.deep.property
 console.log(window, Promise, setTimeout, 'foo')
 
 //* unknown
-/*
-// let flexible2: unknown = 4
-// flexible2 = 'Download some more ram'
-// flexible2 = window.document
-// flexible2 = setTimeout
 
-// let myUnknown: unknown = 14
-// myUnknown.it.is.possible.to.access.any.deep.property //✔️ Fails as it should
+let flexible2: unknown = 4
+flexible2 = 'Download some more ram'
+flexible2 = window.document
+flexible2 = setTimeout
 
-// // This code runs for myUnknown = { all possible values }
-// if (typeof myUnknown === 'string') {
-//   // This code runs for myUnknown = { all strings }
-//   myUnknown
-//   //     ^?
-// } else if (typeof myUnknown === 'number') {
-//   // This code runs for myUnknown = { all numbers }
-//   myUnknown
-//   //     ^?
-// } else {
-//   myUnknown
-//   // ^?
-//   // this would run for "the leftovers"
-//   //       myUnknown = { anything except string or numbers }
-// }
+let myUnknown: unknown = 14
+myUnknown.it.is.possible.to.access.any.deep.property //✔️ Fails as it should
+
+// This code runs for myUnknown = { all possible values }
+if (typeof myUnknown === 'string') {
+  // This code runs for myUnknown = { all strings }
+  myUnknown
+  //     ^?
+} else if (typeof myUnknown === 'number') {
+  // This code runs for myUnknown = { all numbers }
+  myUnknown
+  //     ^?
+} else {
+  myUnknown
+  // ^?
+  // this would run for "the leftovers"
+  //       myUnknown = { anything except string or numbers }
+}
 
 //* Practical use of top types
-/*
-// function doSomethingRisky() {
-//   if (Math.random() > 0.5) return 'ok'
-//   else if (Math.random() > 0.5) throw new Error('Bad luck!')
-//   else throw 'Really bad luck'
-// }
 
-// try {
-//   doSomethingRisky()
-// } catch (e: unknown) {
-//   if (e instanceof Error) {
-//     e
-//     //   ^?
-//   } else if (typeof e === 'string') {
-//     e
-//     //   ^?
-//   } else {
-//     // Last resort
-//     console.error(e)
-//     //                 ^?
-//   }
-// }
+function doSomethingRisky() {
+  if (Math.random() > 0.5) return 'ok'
+  else if (Math.random() > 0.5) throw new Error('Bad luck!')
+  else throw 'Really bad luck'
+}
+
+try {
+  doSomethingRisky()
+} catch (e) { //turn on unknown in catch variables
+  if (e instanceof Error) {
+    e
+    //   ^?
+  } else if (typeof e === 'string') {
+    e
+    //   ^?
+  } else {
+    // Last resort
+    console.error(e)
+    //                 ^?
+  }
+}
 
 //* Almost top type: object
 /*
