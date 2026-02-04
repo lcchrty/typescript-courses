@@ -1,3 +1,4 @@
+/*
 //* any
 let flexible: any = 4
 flexible = 'Download some more ram'
@@ -59,97 +60,99 @@ try {
 }
 
 //* Almost top type: object
-/*
-// let val: object = { status: 'ok' }
-// val = 'foo' //! string is not an object
-// val = null //! null is not an object
-// val = () => 'ok' //✔️ functions are objects
 
-// // The type of this value cannot be modeled by an interface
-// let response: //     ^?
-// { success: string; data: unknown } | { error: string; code: number } =
-//   { success: 'ok', data: [] }
+let val: object = { status: 'ok' }
+val = 'foo' //! string is not an object
+val = null //! null is not an object
+val = () => 'ok' //✔️ functions are objects
 
-// val = response
+// The type of this value cannot be modeled by an interface
+let response: //     ^?
+{ success: string; data: unknown } | { error: string; code: number } =
+  { success: 'ok', data: [] }
+
+val = response
 
 //* Almost top type: {}
-/*
-// const stringOrNumber: string | number = 4
-// let nullableString: string | null = null
-// const myObj: {
-//   a?: number
-//   b: string
-// } = { b: 'foo' }
 
-// let val2: {} = 4
-// val2 = 'abc'
-// val2 = new Date()
-// val2 = stringOrNumber
-// val2 = nullableString
-// val2 = myObj.a
+const stringOrNumber: string | number = 4
+let nullableString: string | null = null
+const myObj: {
+  a?: number
+  b: string
+} = { b: 'foo' }
 
-// /*
-// //? Adding in null and undefined, and we're back to a top type
-// let withoutUndefined: {} | null = 37
-// let withUndefined: {} | null | undefined = 38
-// let anUnknown: unknown = '42'
+let val2: {} = 4
+val2 = 'abc'
+val2 = new Date()
+val2 = stringOrNumber
+val2 = nullableString
+val2 = myObj.a
 
-// withoutUndefined = anUnknown //! unknown is not assignable to {}
-// withUndefined = anUnknown //✔️ OK
 
-// type NullableStringOrNumber = string | number | null | undefined
-// type StringOrNumber = NullableStringOrNumber & {} // ✔️ remove the null and undefined
+//? Adding in null and undefined, and we're back to a top type
+let withoutUndefined: {} | null = 37
+let withUndefined: {} | null | undefined = 38
+let anUnknown: unknown = '42'
 
+withoutUndefined = anUnknown //! unknown is not assignable to {}
+withUndefined = anUnknown //✔️ OK
+
+type NullableStringOrNumber = string | number | null | undefined
+type StringOrNumber = NullableStringOrNumber & {} // ✔️ remove the null and undefined
+*/
 //* Bottom type: never
-/*
-// function obtainRandomVehicle(): any {
-//   return {} as any
-// }
 
-// class Car {
-//   drive() {
-//     console.log('vroom')
-//   }
-// }
-// class Truck {
-//   tow() {
-//     console.log('dragging something')
-//   }
-// }
-// type Vehicle = Truck | Car
+function obtainRandomVehicle(): any {
+    return {} as any
+}
 
-// let myVehicle: Vehicle = obtainRandomVehicle()
+class Car {
+    drive() {
+        console.log('vroom')
+    }
+}
+class Truck {
+    tow() {
+        console.log('dragging something')
+    }
+}
+type Vehicle = Truck | Car | Boat
 
-// // The exhaustive conditional
-// if (myVehicle instanceof Truck) {
-//   myVehicle.tow() // Truck
-// } else if (myVehicle instanceof Car) {
-//   myVehicle.drive() // Car
-// } else {
-//   // NEITHER!
-//   const neverValue: never = myVehicle
-// }
+let myVehicle: Vehicle = obtainRandomVehicle()
 
-/*
 //? Add Boat
-// class Boat {
-//   isFloating() {
-//     return true
-//   }
-// }
+class Boat {
+    isFloating() {
+        return true
+    }
+}
 
-/*
 //? Unreachable Error
-// class UnreachableError extends Error {
-//   constructor(_nvr: never, message: string) {
-//     super(message)
-//   }
-// }
+class UnreachableError extends Error {
+    constructor(_nvr: never, message: string) {
+        super(message)
+    }
+}
+// The exhaustive conditional
+if (myVehicle instanceof Truck) {
+    myVehicle.tow() // Truck
+} else if (myVehicle instanceof Car) {
+    myVehicle.drive() // Car
+} else if (myVehicle instanceof Boat) {
+    // Boat do nothing for now
+} else {
+    // NEITHER!
+    //   const neverValue: never = myVehicle //an assertion that nothing shoud be leftover in this block
+    throw new UnreachableError(
+        myVehicle,
+        `Unexpected vehicle type: ${myVehicle}`,
+    )
+}
 
-// throw new UnreachableError(
-//   myVehicle,
-//   `Unexpected vehicle type: ${myVehicle}`,
-// )
+
+
+
 
 //* Unit Types
 /*

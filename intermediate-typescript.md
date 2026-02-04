@@ -87,6 +87,8 @@ What is a simple test to determine if something is a value in TypeScript?
 
 ## top & bottom types
 
+### top types
+
 A top type (symbol: `⊤`) is a type that describes any possible value allowed by the system.
 
 `any` allows typescript to play by regular javascript rules  
@@ -137,3 +139,37 @@ What is an appropriate use case for the unknown type when passing values through
 
 What is the trade-off when using typeguards to validate API responses at runtime?  
 *You pay a runtime cost but get more actionable errors when the API shape doesn't match expectations*
+
+### objects & Empty Objects
+
+almost top types - object & {}  
+interfaces represent object types which is DIFFERENT than the type called object
+
+null is not assignable to Empty Object
+
+> what is the point of a non nullable?  
+
+**QUIZ**  
+What does the `object` type represent in TypeScript?  
+*The set of all possible values except for primitives*  
+
+Which of the following values are NOT accepted by the `object` type?  
+*`number`, `string`, `boolean`, `null`, `undefined`, `symbol`, and `bigint`*
+
+What is the empty `object` type `{}` allowed to accept?  
+*All possible values except `null` and `undefined`*
+
+How can you remove `null` and `undefined` from a union type like `string | number | null | undefined`?
+*Use the `NonNullable` utility type or intersect with `{}`*
+
+When strict `null` checks are disabled in tsconfig, how does `null` behave with the object type?  
+*`null` is allowed as part of any type created*
+
+### bottom types
+
+if the types represent what will be at runtime - you should `never` get here
+
+* I think I've handle every possible thing that could be
+* exhaustive condition -- unreachable errors -- helpful for tracing in observalibilty tools/logging
+
+### unit types
