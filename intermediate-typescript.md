@@ -173,3 +173,26 @@ if the types represent what will be at runtime - you should `never` get here
 * exhaustive condition -- unreachable errors -- helpful for tracing in observalibilty tools/logging
 
 ### unit types
+
+you can create a unit type with a literal type
+a unit type is ONE thing
+
+voids can accepts `void` and `undefined`
+
+## nullish values
+
+### null nad non-null assertions
+
+`null` has to be explicitly set - nothing is here  
+someone has filled in this field and it's value is NOTHING
+
+versus `undefined` is the absence of a value - the value has not been defined
+
+non-null assertion operator: `!`
+
+* tells TS to ignore the possibility that this value could be `null` or `undefined`
+* useful in tests, recommends against in library or application code becuase it will NOT throw an error
+
+### definite assignment assertion
+
+turn on `strictPropertyInitialization` in tsconfig

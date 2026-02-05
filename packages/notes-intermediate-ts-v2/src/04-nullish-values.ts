@@ -7,56 +7,56 @@ const userInfo = {
 }
 
 //* Undefined
-/*
-// interface FormInProgress {
-//   createdAt: Date
-//   data: FormData
-//   completedAt?: Date
-// }
-// const formInProgress: FormInProgress = {
-//   createdAt: new Date(),
-//   data: new FormData(),
-// }
-// function submitForm() {
-//   const myDate: Date = formInProgress.completedAt
-//   formInProgress.completedAt = new Date()
-// }
+
+interface FormInProgress {
+  createdAt: Date
+  data: FormData
+  completedAt?: Date
+}
+const formInProgress: FormInProgress = {
+  createdAt: new Date(),
+  data: new FormData(),
+}
+function submitForm() {
+  const myDate: Date = formInProgress.completedAt
+  formInProgress.completedAt = new Date()
+}
 
 //* void
-/*
+
 // console.log(`console.log returns nothing.`)
 
 //* Non-null assertion operator
-/*
-// type GroceryCart = {
-//   fruits?: { name: string; qty: number }[]
-//   vegetables?: { name: string; qty: number }[]
-// }
 
-// const cart: GroceryCart = {}
+type GroceryCart = {
+  fruits?: { name: string; qty: number }[]
+  vegetables?: { name: string; qty: number }[]
+}
 
-// cart.fruits.push({ name: 'kumkuat', qty: 1 })
-// cart.fruits!.push({ name: 'kumkuat', qty: 1 })
+const cart: GroceryCart = {}
+
+cart.fruits.push({ name: 'kumkuat', qty: 1 })
+cart.fruits!.push({ name: 'kumkuat', qty: 1 })
 
 //* Definite assignment assertion
-/*
-// class ThingWithAsyncSetup {
-//   setupPromise: Promise<any>
-//   isSetup: boolean
 
-//   constructor() {
-//     this.setupPromise = new Promise((resolve) => {
-//       this.isSetup = false
-//       return this.doSetup(resolve)
-//     }).then(() => {
-//       this.isSetup = true
-//     })
-//   }
+class ThingWithAsyncSetup {
+  setupPromise: Promise<any>
+  isSetup: boolean
 
-//   private async doSetup(resolve: (value: unknown) => void) {
-//     // some async stuff
-//   }
-// }
+  constructor() {
+    this.setupPromise = new Promise((resolve) => {
+      this.isSetup = false
+      return this.doSetup(resolve)
+    }).then(() => {
+      this.isSetup = true
+    })
+  }
+
+  private async doSetup(resolve: (value: unknown) => void) {
+    // some async stuff
+  }
+}
 
 //* Optional Chaining
 /*

@@ -104,18 +104,18 @@ type StringOrNumber = NullableStringOrNumber & {} // ✔️ remove the null and 
 //* Bottom type: never
 
 function obtainRandomVehicle(): any {
-    return {} as any
+  return {} as any
 }
 
 class Car {
-    drive() {
-        console.log('vroom')
-    }
+  drive() {
+    console.log('vroom')
+  }
 }
 class Truck {
-    tow() {
-        console.log('dragging something')
-    }
+  tow() {
+    console.log('dragging something')
+  }
 }
 type Vehicle = Truck | Car | Boat
 
@@ -123,31 +123,31 @@ let myVehicle: Vehicle = obtainRandomVehicle()
 
 //? Add Boat
 class Boat {
-    isFloating() {
-        return true
-    }
+  isFloating() {
+    return true
+  }
 }
 
 //? Unreachable Error
 class UnreachableError extends Error {
-    constructor(_nvr: never, message: string) {
-        super(message)
-    }
+  constructor(_nvr: never, message: string) {
+    super(message)
+  }
 }
 // The exhaustive conditional
 if (myVehicle instanceof Truck) {
-    myVehicle.tow() // Truck
+  myVehicle.tow() // Truck
 } else if (myVehicle instanceof Car) {
-    myVehicle.drive() // Car
+  myVehicle.drive() // Car
 } else if (myVehicle instanceof Boat) {
-    // Boat do nothing for now
+  // Boat do nothing for now
 } else {
-    // NEITHER!
-    //   const neverValue: never = myVehicle //an assertion that nothing shoud be leftover in this block
-    throw new UnreachableError(
-        myVehicle,
-        `Unexpected vehicle type: ${myVehicle}`,
-    )
+  // NEITHER!
+  //   const neverValue: never = myVehicle //an assertion that nothing shoud be leftover in this block
+  throw new UnreachableError(
+    myVehicle,
+    `Unexpected vehicle type: ${myVehicle}`,
+  )
 }
 
 
@@ -155,22 +155,22 @@ if (myVehicle instanceof Truck) {
 
 
 //* Unit Types
-/*
-// //? null and undefined
-// let myNull: null = null
-// let myUndefined: undefined = undefined
 
-// myNull = undefined
-// myUndefined = null
+//? null and undefined
+let myNull: null = null
+let myUndefined: undefined = undefined
 
-// //? void
-// let myVoid: void = (function() {})()// invoking a void-returning IIFE
+myNull = undefined
+myUndefined = null
 
-// myVoid = undefined
-// myVoid = null
+//? void
+let myVoid: void = (function () { })()// invoking a void-returning IIFE
 
-// myUndefined = myVoid
-// myNull = myVoid
+myVoid = undefined
+myVoid = null
+
+myUndefined = myVoid
+myNull = myVoid
 
 /**/
 
