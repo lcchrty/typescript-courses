@@ -42,7 +42,7 @@ cart.fruits!.push({ name: 'kumkuat', qty: 1 })
 
 class ThingWithAsyncSetup {
   setupPromise: Promise<any>
-  isSetup: boolean
+  isSetup!: boolean
 
   constructor() {
     this.setupPromise = new Promise((resolve) => {
@@ -59,59 +59,60 @@ class ThingWithAsyncSetup {
 }
 
 //* Optional Chaining
-/*
-// type Payment = {
-//   id: string
-//   amount: number
-//   createdAt: Date
-// }
-// type Invoice = {
-//   id: string
-//   due: number
-//   payments: Payment[]
-//   lastPayment?: Payment
-//   createdAt: Date
-// }
-// type Customer = {
-//   id: string
-//   lastInvoice?: Invoice
-//   invoices: Invoice[]
-// }
-// type ResponseData = {
-//   customers?: Customer[]
-//   customer?: Customer
-// }
-// function getLastPayment(data: ResponseData): number | undefined {
-//   const { customer } = data
-//   if (!customer) return
+type Payment = {
+  id: string
+  amount: number
+  createdAt: Date
+}
+type Invoice = {
+  id: string
+  due: number
+  payments: Payment[]
+  lastPayment?: Payment
+  createdAt: Date
+}
+type Customer = {
+  id: string
+  lastInvoice?: Invoice
+  invoices: Invoice[]
+}
+type ResponseData = {
+  customers?: Customer[]
+  customer?: Customer
+}
+function getLastPayment(data: ResponseData): number | undefined {
+  const { customer } = data
+  if (!customer) return
 
-//   const { lastInvoice } = customer
-//   if (!lastInvoice) return
+  const { lastInvoice } = customer
+  if (!lastInvoice) return
 
-//   const { lastPayment } = lastInvoice
-//   if (!lastPayment) return
+  const { lastPayment } = lastInvoice
+  if (!lastPayment) return
 
-//   return lastPayment.amount
-// }
+  return lastPayment.amount
+}
 
-/*
-// function getLastPayment2(data: ResponseData): number | undefined {
-//   return data?.customer?.lastInvoice?.lastPayment?.amount
-// }
+
+function getLastPayment2(data: ResponseData): number | undefined {
+  return data?.customer?.lastInvoice?.lastPayment?.amount
+}
+//if at any point something is undefined, it will evaluate to undefined
 
 //* Nullish Coalescing
-/*
-// function setVolume(v: number): void {}
 
-// type PlayerConfig = {
-//   volume?: 0 | 25 | 50 | 75 | 100
-// }
+function setVolume(v: number): void { }
 
-// function initializePlayer(config: PlayerConfig): void {
-//   const vol =
-//     typeof config.volume === 'undefined' ? 50 : config.volume
-//   setVolume(vol)
-// }
+type PlayerConfig = {
+  volume?: 0 | 25 | 50 | 75 | 100
+}
+
+function initializePlayer(config: PlayerConfig): void {
+  const vol =
+    // typeof config.volume === 'undefined' ? 50 : config.volume becomes
+    config.volume ?? 50 // can replace a double pipe with nullish coalescing operator to account for flasey values like 0
+  setVolume(vol)
+}
 
 /**/
 export default {}

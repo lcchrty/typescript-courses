@@ -191,8 +191,63 @@ versus `undefined` is the absence of a value - the value has not been defined
 non-null assertion operator: `!`
 
 * tells TS to ignore the possibility that this value could be `null` or `undefined`
-* useful in tests, recommends against in library or application code becuase it will NOT throw an error
+* useful in tests, recommends against in library or application code because it will NOT throw an error
 
 ### definite assignment assertion
 
 turn on `strictPropertyInitialization` in tsconfig
+
+![alt text](./screengrabs/image.png)
+
+* promise executor (callback) is invoked synchronously
+* typescript does not know this becaue it is placed within the constructor
+* we are telling typescript `!` that we are going to take care of assigning this type
+  * better practice to use a type-guard in lib/app in production
+
+`declare` in ambient type information ????
+
+* what is ambient type information?
+
+### optional chaining
+
+``` TypeScript
+function getLastPayment2(data: ResponseData): number | undefined {
+  return data?.customer?.lastInvoice?.lastPayment?.amount
+}
+//if at any point something is undefined, it will evaluate to undefined
+```
+
+QUIZ
+
+**What does the optional chaining operator (?.) evaluate to if any property in the chain is undefined or null?**  
+`undefined`
+
+**What is the main difference between the nullish coalescing operator (??) and the logical OR operator (||)?**  
+*The logical OR operator checks for truthy/falsy values, while nullish coalescing only checks for null or undefined*
+
+**Consider this code:**
+
+``` TypeScript
+const volume = config.volume || 50;
+```
+
+**What problem occurs when config.volume is set to 0?**
+*The value 0 fails the truthy check and gets replaced with 50, even though 0 is a valid volume value*  
+
+**Which operator allows safe drilling into nested objects without throwing errors if intermediate properties are undefined?**  
+*Optional chaining (?.)*
+
+**Which of the following values would be treated differently by the logical OR operator (||) compared to the nullish coalescing operator (??)?**  
+*0, empty string, and Boolean false*
+
+## modules & CJS interop
+
+### overview
+
+### ES module imports/exports
+
+### commonjs interop
+
+### native ES modules
+
+### importing non-typescript files
