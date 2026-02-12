@@ -242,12 +242,100 @@ const volume = config.volume || 50;
 
 ## modules & CJS interop
 
-### overview
+### es modules imports and exports
 
-### ES module imports/exports
+* default export are the whole file  as module - can change you name the import
+
+```TypeScript
+export { lemon, lime } from './citrus' // re-export
+export * as berries from './berries' // re-export entire module as a single namespace
+```
+
+* there is a bunch of stuff in the berries file, and I want it exported as berries
+* what is the benefit of this?
+
+#### import types
+
+``` TypeScript
+import type { Strawberry } from './berries/strawberry'
+
+let z: Strawberry = { color: 'red' }
+new Strawberry()
+```
+
+* can import types
+* to use as type ONLY --> `import type { Strawberry } from '...'`
+* tells your compiler that it is a type only input and it is ok to drop that import because we don't need type strawberry at runtime only for type checking
 
 ### commonjs interop
 
+* example - `module.exports = {...}`
+* `import * as bananaNamespace from './banana'` || `import { Banana } form '.banana'`
+  * you can export all kinds of modules on that common js `module.exports` object
+
+``` TypeScript
+class Melon {
+    cutIntoSlices() { }
+}
+
+module.exports = Melon
+
+\\\\\\\\\\\\\\\\\
+
+// ? import as a single thing (rare)
+import * as melonNamespace from './melon'
+// ? special ts import
+import Melon = require('./melon') // this only works in ts if you DON'T want to change your compile type
+
+const melon = new Melon()
+melon.cutIntoSlices()
+```
+
+* esmodule interop flag --> will trea as a default export (which it is *technically* not)
+  * if you enforce in a library - you force all users of the library to turn this onc
+* *almost* a cjs import and should be able to adjust compiler settings to work with this syntax
+* preference for ecmascript imports whereer possible, but this `melon = require` syntax is great for flexibility
+* NOTE: import * as f from 'fs' required a LOT more behind the scenes code to compile to js per ts playground
+  
+![alt text](./screengrabs/imports.png)
+
 ### native ES modules
 
+package.js - type property
+
+* `"module"` indicates that `.js` files should be run as ES modules
+* `"commonjs"` indicates that `.js` files should be run as CommonJS
+
+* importing `.cjs` files --> need to add the file extension
+* top level await is only available in es modules!
+
 ### importing non-typescript files
+
+* global.d.ts is or highest level adjustments for how TS should treat certain things
+
+``` TypeScript
+declare module '*.png' {
+    const imgUrl: string
+    export default imgUrl
+}
+```
+
+* declaring and sayin treat this as a string - this file can ONLY contain types
+  * it will "compile away" in the build
+* ambient type information
+
+**QUIZ**
+**What is the purpose of a global.d.ts file in TypeScript?**  
+*To place ambient type information and make high-level adjustments to how TypeScript understands types*
+
+**When importing a PNG file in TypeScript with a bundler like webpack, what error typically occurs without proper type declarations?**  
+*TypeScript cannot find a corresponding .ts file for the PNG import*
+
+**In a module declaration within a global.d.ts file, what must you do to make types available to consumers of that module?**  
+*Explicitly export the types or values from the module declaration*
+
+**What types of content are allowed in a .d.ts declaration file?**  
+*Only type declarations, not actual values*
+
+**When creating a module declaration for non-code files like images, what can the module name pattern include?**  
+*Patterns matching file extensions, URLs, or any string pattern*
