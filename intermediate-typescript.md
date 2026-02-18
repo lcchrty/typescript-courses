@@ -339,3 +339,121 @@ declare module '*.png' {
 
 **When creating a module declaration for non-code files like images, what can the module name pattern include?**  
 *Patterns matching file extensions, URLs, or any string pattern*
+
+## generic scopes and constraints
+
+### generic constraints
+
+* ability to spcify a minimum requirement on a type parameter
+
+``` TypeScript
+function listToDict<T>(
+  list: T[], // array as input
+  idGen: (arg: T) => string, // fn for obtaining item's id
+): { [k: string]: T } {
+  // create dict to fill
+  const dict: { [k: string]: T } = {}
+
+  for (let item of list) {
+    // for each item
+    dict[idGen(item)] = item // make a key store in dict
+  }
+
+  return dict // result
+}
+```
+
+* list is type parameter 'T'
+* can infer return type based on the list that we give it
+
+``` TypeScript
+interface HasId {
+  id: string
+}
+interface Dict<T> {
+  [k: string]: T
+}
+
+function listToDict(list: HasId[]): Dict<HasId> {
+  const dict: Dict<HasId> = {}
+
+  list.forEach((item) => {
+    dict[item.id] = item
+  })
+
+  return dict
+}
+```
+
+* removed generics
+* input is a list of objects that HasId
+
+quiz
+**What is the purpose of generic constraints in TypeScript?**  
+*To specify a minimum requirement on a type parameter*  
+
+**Given the following code, what is the main problem with this implementation?**
+
+``` TypeScript
+interface HasId {
+  id: string;
+}
+
+function listToDict(list: HasId[]): Dict<HasId> {
+  const dict: Dict<HasId> = {};
+  list.forEach((item) => {
+    dict[item.id] = item;
+  });
+  return dict;
+}
+```  
+
+*Only the id property is available in the result, losing other type information*  
+
+**What does the syntax T extends HasId accomplish in a generic function declaration?**  
+*It ensures T must satisfy HasId while preserving additional type information*  
+
+**In the example of converting an array to a dictionary, what advantage does using a type parameter T provide over using a concrete type like HasId?**  
+*It allows type information beyond the minimum requirement to flow through the function*
+
+**When using `function listToDict<T>(list: T[]): Dict<T>` without constraints, what problem occurs when trying to access item.id inside the function?**  
+*TypeScript cannot guarantee that T has an id property, causing a type error*  
+
+### satisfies
+
+* as is "casting"
+* `satisfies` allows me to assign to a value and say that it "satisfies" the type that it would match if it were better
+* T is a subtype of HasId
+  * it could be EXACTLY HasId or it could have additional properties, etc.
+
+**What is the primary benefit of using the satisfies keyword in TypeScript?**  
+*It allows you to type-check against an interface while retaining the most specific type possible*
+
+**How does the satisfies keyword differ from using the as keyword for type casting?**  
+*The as keyword forces a value to be regarded as a specific type without preserving the most specific type information*  
+
+**Given the following interface:**
+
+``` TypeScript
+interface ColorWithId extends HasId {
+  color?: string;
+}
+```
+
+**What issue arises when using an explicit type annotation like const myColor: ColorWithId = {...}?**  
+*
+The color property is treated as possibly undefined, requiring additional type guards to access it safely*  
+
+**In the context of TypeScript generics, what does the extends keyword mean when used in a constraint like T extends HasId?**  
+*T is a subtype of HasId, meaning all possible values of T must be included in the set of objects that have an ID property*  
+
+### scopes & TypeParams
+
+****  
+**  
+****  
+**  
+****  
+**  
+****  
+**  

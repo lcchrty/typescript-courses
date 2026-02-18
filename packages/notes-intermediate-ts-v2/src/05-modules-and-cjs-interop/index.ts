@@ -59,10 +59,10 @@ import * as bananaNamespace from './banana.cjs'
 
 import img from "./ts-logo.png"
 // ? Add to global.d.ts
-// declare module '*.png' {
-//     const imgUrl: string
-//     export default imgUrl
-// }
+declare module '*.png' {
+    const imgUrl: string
+    export default imgUrl
+}
 
 
 /**/
