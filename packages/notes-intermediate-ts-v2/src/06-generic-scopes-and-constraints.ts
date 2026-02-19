@@ -76,6 +76,12 @@ function receiveFruitBasket(bowl: any) {
   })
 }
 
+/**
+ * 
+ * @param first TYPE PARAM EXAMPLE
+ * @returns 
+ */
+
 // outer function
 function tupleCreator<T>(first: T) {
   // inner function

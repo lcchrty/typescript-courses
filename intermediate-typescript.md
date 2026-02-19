@@ -94,6 +94,8 @@ A top type (symbol: `⊤`) is a type that describes any possible value allowed b
 `any` allows typescript to play by regular javascript rules  
 `unknown` typesx values cannot be used without applying a type guard
 
+#### Quiz
+
 What is the key difference between the any type and the unknown type in TypeScript?  
 *`unknown` requires type narrowing before use, while `any` disables type checking*
 
@@ -124,7 +126,8 @@ What happens when you assign different types of values to a variable declared as
 * an "opaque" value
 * type-guards when talking to APIs that are NOT SaaS and won't know that it is changed -- makes errors easier to tracer
 
-**Quiz**
+#### Quiz
+
 What TypeScript compiler setting automatically types catch block variables as unknown?  
 *UseUnknownInCatchVariables*
 
@@ -148,8 +151,9 @@ interfaces represent object types which is DIFFERENT than the type called object
 null is not assignable to Empty Object
 
 > what is the point of a non nullable?  
+>
+#### Quiz
 
-**QUIZ**  
 What does the `object` type represent in TypeScript?  
 *The set of all possible values except for primitives*  
 
@@ -217,7 +221,7 @@ function getLastPayment2(data: ResponseData): number | undefined {
 //if at any point something is undefined, it will evaluate to undefined
 ```
 
-QUIZ
+#### Quiz
 
 **What does the optional chaining operator (?.) evaluate to if any property in the chain is undefined or null?**  
 `undefined`
@@ -324,7 +328,8 @@ declare module '*.png' {
   * it will "compile away" in the build
 * ambient type information
 
-**QUIZ**
+#### Quiz
+
 **What is the purpose of a global.d.ts file in TypeScript?**  
 *To place ambient type information and make high-level adjustments to how TypeScript understands types*
 
@@ -388,7 +393,8 @@ function listToDict(list: HasId[]): Dict<HasId> {
 * removed generics
 * input is a list of objects that HasId
 
-quiz
+#### Quiz
+
 **What is the purpose of generic constraints in TypeScript?**  
 *To specify a minimum requirement on a type parameter*  
 
@@ -426,6 +432,8 @@ function listToDict(list: HasId[]): Dict<HasId> {
 * T is a subtype of HasId
   * it could be EXACTLY HasId or it could have additional properties, etc.
 
+#### Quiz
+
 **What is the primary benefit of using the satisfies keyword in TypeScript?**  
 *It allows you to type-check against an interface while retaining the most specific type possible*
 
@@ -447,13 +455,97 @@ The color property is treated as possibly undefined, requiring additional type g
 **In the context of TypeScript generics, what does the extends keyword mean when used in a constraint like T extends HasId?**  
 *T is a subtype of HasId, meaning all possible values of T must be included in the set of objects that have an ID property*  
 
+**When a variable is declared with `satisfies` and assigned a specific literal value like `"green"`, what type does TypeScript infer for that property?**  
+*The most specific type possible, which would be the literal type "green" rather than the general string type*
+
 ### scopes & TypeParams
 
-****  
-**  
-****  
-**  
-****  
-**  
-****  
-**  
+* `TypeParams` are scope for variables like in functions
+* best practices:
+  
+``` TypeScript
+function example1<T extends HasId[]>(list: T) {
+  return list.pop()
+  //      ^?
+}
+
+const result1 = example1([
+  //   ^?
+  new Payment(),
+  new Invoice(),
+  new Payment()
+])
+
+```
+
+* losing type information with hasId or undefined
+
+``` TypeScript
+function example2<T extends HasId>(list: T[]) {
+  return list.pop()
+  //      ^?
+}
+
+const result2 = example2([
+  //   ^?
+  new Payment(),
+  new Invoice(),
+  new Payment()
+])
+```
+
+* gain specificity of what should exist on this type
+* specify your constraints in the most simple way that you can
+
+#### Quiz
+
+**How do type parameters behave in terms of scoping?**  
+*Type parameters work just like variables in terms of scoping*  
+
+**In the following code, what is the return type of result1?**  
+
+``` TypeScript
+function example1<T extends HasId[]>(list: T) {
+  return list.pop();
+}
+const result1 = example1([payment, invoice]);
+```
+
+*HasId or undefined*  
+
+**What is the best practice when defining type parameter constraints?**  
+*Specify constraints in the most simple way possible to maximize type information flow*  
+
+**In nested functions with type parameters, which type parameters can an inner function access?**  
+*Both its own type parameters and the outer function's type parameters*  
+
+**What is the difference between `<T extends HasId[]>` and `<T extends HasId>` with parameter `list: T[]`?**  
+*The second approach preserves more specific type information through the function*  
+
+## conditional & mapped types
+
+### ternary operations & expressing conditions
+
+### utility types
+
+### inference with conditional types
+
+### infer constraints
+
+### utility types using infer
+
+### record & pick
+
+### mapping modifiers & template literals
+
+### filtering properties
+
+## variance over type params
+
+### type registry exercise
+
+### variance over type params
+
+### invariane & bivariance
+
+## wrap up
